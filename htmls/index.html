@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>CineK - Tu cine online</title>
+    <link rel="icon" href="https://png.pngtree.com/png-clipart/20221006/ourmid/pngtree-popcorn-logo-png-image_6287125.png">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="../img/cinekklogo.png" alt="CineK Logo" style="width: 90px; height: auto;">
+                </a>
+                <h1>CineK</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="cartelera.html">Cartelera</a></li>
+                    <li><a href="estrenos.html">Estrenos</a></li>
+                    <li><a href="trailer.html">Trailers</a></li>
+                    <li><a href="comida.html">Comida</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-marquee">
+            <div id="hero-track" class="hero-track"></div>
+        </div>
+        <div class="hero-content">
+            <a href="cartelera.html" class="btn">Ver cartelera</a>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- CARTELERA RESUMIDA -->
+    <section id="cartelera" class="section">
+        <h2>Películas en cartelera</h2>
+        <p class="cartelera-info">Resumen dinámico de películas actualmente en cartelera.</p>
+        <div id="resumen-cartelera" class="resumen-cartelera"></div>
+        <p class="text-center"><a href="cartelera.html" class="btn">Ver cartelera completa</a></p>
+    </section>
+
+    <hr>
+
+    <!-- ESTRENOS DESTACADOS -->
+    <section id="estrenos" class="section">
+        <h2>Próximos estrenos destacados</h2>
+        <div class="estrenos-container">
+            <div class="estreno">
+                <img src="https://cdn.marvel.com/content/2x/smbnd_online_1400x2100_reflection_03.jpg" alt="Spiderman BND poster">
+                <h3>Spiderman: Brand New Day</h3>
+                <a href="trailer.html">Ver trailer</a>
+            </div>
+            <div class="estreno">
+                <img src="https://m.media-amazon.com/images/I/71hDf0xShmL._AC_UF894,1000_QL80_.jpg" alt="mandalorian y grogu poster">
+                <h3>The Mandalorian and Grogu</h3>
+                <a href="trailer.html">Ver trailer</a>
+            </div>
+            <div class="estreno">
+                <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/ee/Avengers_Doomsday_poster.jpg/250px-Avengers_Doomsday_poster.jpg" alt="avengers doomsday poster">
+                <h3>Avengers: Doomsday  </h3>
+                <a href="trailer.html">Ver trailer</a>
+            </div>
+            <div class="estreno">
+                <img src="https://m.media-amazon.com/images/M/MV5BN2MyYjk2MWMtODMyZS00MDUyLWE0OGQtOTQ3MGY0MDE0ZjVmXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="la odisea poster">
+                <h3>La Odisea</h3>
+                <a href="trailer.html">Ver trailer</a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Ubicación</h3>
+                <p>Calle Principal, 123</p>
+                <p>28001 Madrid</p>
+                <a href="https://maps.google.com/?q=cine+madrid" target="_blank">Ver en Google Maps</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>Teléfono: +34 91 234 5678</p>
+                <p>Email: info@CineK.es</p>
+            </div>
+            <div class="footer-section">
+                <h3>Redes Sociales</h3>
+                <a href="https://facebook.com" target="_blank">Facebook</a> |
+                <a href="https://twitter.com" target="_blank">Twitter</a> |
+                <a href="https://instagram.com" target="_blank">Instagram</a>
+            </div>
+        </div>
+        <p class="footer-bottom">&copy; 2026 CineK. Todos los derechos reservados.</p>
+    </footer>
+    <script>
+        const TMDB_API_KEY = "4f0675e02026147f07c5129d1d1d5f16";
+        const TMDB_BASE_URL = "https://api.themoviedb.org/3";
+        const TMDB_IMAGE_URL = "https://image.tmdb.org/t/p/w500";
+
+        const heroTrack = document.getElementById("hero-track");
+        const resumenCartelera = document.getElementById("resumen-cartelera");
+
+        function getPosterUrl(pelicula) {
+            if (!pelicula.poster_path) {
+                return "../img/cinekklogo.png";
+            }
+
+            return `${TMDB_IMAGE_URL}${pelicula.poster_path}`;
+        }
+
+        function crearHeroCard(pelicula, estado) {
+            return `
+                <div class="hero-card">
+                    <img src="${getPosterUrl(pelicula)}" alt="${pelicula.title}">
+                    <h3>${pelicula.title}</h3>
+                    <p>${estado}</p>
+                </div>
+            `;
+        }
+
+        function pintarHero(cartelera, proximamente) {
+            const peliculasHero = [
+                ...cartelera.slice(0, 6).map(pelicula => crearHeroCard(pelicula, "En cartelera")),
+                ...proximamente.slice(0, 6).map(pelicula => crearHeroCard(pelicula, "Próximamente"))
+            ];
+
+            heroTrack.innerHTML = peliculasHero.join("") + peliculasHero.join("");
+        }
+
+        function generarDatosResumen(index) {
+            const generos = ["Acción", "Drama", "Comedia", "Animación", "Ciencia ficción", "Aventura", "Terror", "Suspense"];
+            const duraciones = ["102 min", "114 min", "126 min", "138 min", "145 min", "158 min"];
+
+            return {
+                genero: generos[index % generos.length],
+                duracion: duraciones[index % duraciones.length]
+            };
+        }
+
+        function pintarResumenCartelera(peliculas) {
+            resumenCartelera.innerHTML = "";
+
+            peliculas.slice(0, 4).forEach((pelicula, index) => {
+                const datos = generarDatosResumen(index);
+                const item = document.createElement("div");
+                item.className = "resumen-pelicula";
+
+                item.innerHTML = `
+                    <div>
+                        <h3>${pelicula.title}</h3>
+                        <p>${datos.genero} · ${datos.duracion}</p>
+                    </div>
+                    <a href="cartelera.html" class="vermascartelera">Ver más</a>
+                `;
+
+                resumenCartelera.appendChild(item);
+            });
+        }
+
+        async function cargarIndexDinamico() {
+            try {
+                const [respuestaCartelera, respuestaProximamente] = await Promise.all([
+                    fetch(`${TMDB_BASE_URL}/movie/now_playing?api_key=${TMDB_API_KEY}&language=es-ES&region=ES&page=1`),
+                    fetch(`${TMDB_BASE_URL}/movie/upcoming?api_key=${TMDB_API_KEY}&language=es-ES&region=ES&page=1`)
+                ]);
+
+                const datosCartelera = await respuestaCartelera.json();
+                const datosProximamente = await respuestaProximamente.json();
+
+                if (!datosCartelera.results || !datosProximamente.results) {
+                    return;
+                }
+
+                pintarHero(datosCartelera.results, datosProximamente.results);
+                pintarResumenCartelera(datosCartelera.results);
+            } catch (error) {
+                console.error("No se pudo cargar la cartelera dinámica del inicio.", error);
+            }
+        }
+
+        cargarIndexDinamico();
+    </script>
+</body>
+</html>
