@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+       <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bungee+Inline&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trailers - CineK</title>
+    <link rel="icon" href="https://png.pngtree.com/png-clipart/20221006/ourmid/pngtree-popcorn-logo-png-image_6287125.png">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="../img/cinekklogo.png" alt="CineK Logo" style="width: 90px; height: auto;">
+                </a>
+                <h1>CineK</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="cartelera.html">Cartelera</a></li>
+                    <li><a href="estrenos.html">Estrenos</a></li>
+                    <li><a href="trailer.html">Trailers</a></li>
+                    <li><a href="comida.html">Comida</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <!-- TÍTULO PRINCIPAL -->
+<div id="marquee">
+  <div class="neon_bar top"></div>
+  <div class="marquee_message">
+    <span>TRAILERS</span>
+  </div>
+  <div class="neon_bar bottom"></div>
+</div>
+
+    <!-- TRAILERS DE ESTRENOS RECIENTES -->
+    <section class="section">
+        <h2>Trailers de estrenos recientes</h2>
+        <div id="trailers-recientes" class="trailers-dinamicos-grid"></div>
+    </section>
+
+    <hr>
+
+    <!-- TRAILERS DE PRÓXIMOS ESTRENOS -->
+    <section class="section">
+        <h2>Trailers de próximos estrenos</h2>
+        <div id="trailers-proximos" class="trailers-dinamicos-grid"></div>
+    </section>
+
+
+    <!-- FOOTER -->
+        <footer>
+    <div class="footer-content footer-simple">
+        <div class="footer-section">
+            <h3>CineK</h3>
+            <p>Tu cine de confianza.</p>
+        </div>
+
+        <div class="footer-section">
+            <h3>Ubicación</h3>
+            <p>Little St James Island</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=Little+St+James+Island" target="_blank" rel="noopener noreferrer">Ver en Google Maps</a>
+        </div>
+
+        <div class="footer-section">
+            <h3>Contacto</h3>
+            <p>info@cinek.es</p>
+        </div>
+    </div>
+    <p class="footer-bottom">&copy; 2026 CineK.</p>
+</footer>
+    <script>
+        const TMDB_API_KEY = "4f0675e02026147f07c5129d1d1d5f16";
+        const TMDB_BASE_URL = "https://api.themoviedb.org/3";
+        const TMDB_IMAGE_URL = "https://image.tmdb.org/t/p/w500";
+
+        const trailersRecientes = document.getElementById("trailers-recientes");
+        const trailersProximos = document.getElementById("trailers-proximos");
+
+        const fallbackTrailersRecientes = [
+            {
+                title: "Dune: Parte 2",
+                overview: "Paul Atreides se une a Chani y los Fremen mientras busca venganza contra quienes destruyeron a su familia.",
+                release_date: "2024-03-01",
+                vote_average: 8.5,
+                poster_path: "https://pics.filmaffinity.com/Dune_Parte_Dos-288678616-large.jpg",
+                trailerKey: "Way9Dexny3w"
+            },
+            {
+                title: "Barbie",
+                overview: "Barbie abandona Barbieland y descubre el mundo real junto a Ken.",
+                release_date: "2023-07-21",
+                vote_average: 7.0,
+                poster_path: "https://cdng.europosters.eu/pod_public/750/262974.jpg",
+                trailerKey: "GZkSektf89I"
+            }
+        ];
+
+        const fallbackTrailersProximos = [
+            {
+                title: "Spider-Man: Brand New Day",
+                overview: "Nueva entrega del universo cinematográfico de Spider-Man.",
+                release_date: "2026-07-31",
+                vote_average: 0,
+                poster_path: "https://cdn.marvel.com/content/2x/smbnd_online_1400x2100_reflection_03.jpg",
+                trailerKey: null
+            },
+            {
+                title: "Avengers: Doomsday",
+                overview: "Nueva película de los Vengadores dentro del universo Marvel.",
+                release_date: "2026-12-18",
+                vote_average: 0,
+                poster_path: "https://upload.wikimedia.org/wikipedia/en/thumb/e/ee/Avengers_Doomsday_poster.jpg/250px-Avengers_Doomsday_poster.jpg",
+                trailerKey: null
+            }
+        ];
+
+        function obtenerPoster(pelicula) {
+            if (pelicula.poster_path && pelicula.poster_path.startsWith("http")) {
+                return pelicula.poster_path;
+            }
+
+            if (pelicula.poster_path) {
+                return `${TMDB_IMAGE_URL}${pelicula.poster_path}`;
+            }
+
+            return "../img/cinekklogo.png";
+        }
+
+        function formatearFecha(fecha) {
+            if (!fecha) {
+                return "Fecha no disponible";
+            }
+
+            return new Date(fecha).toLocaleDateString("es-ES", {
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            });
+        }
+
+        function obtenerPuntuacion(pelicula) {
+            if (!pelicula.vote_average || pelicula.vote_average === 0) {
+                return "Sin puntuación todavía";
+            }
+
+            return `${pelicula.vote_average.toFixed(1)}/10`;
+        }
+
+        function obtenerDescripcion(pelicula) {
+            if (!pelicula.overview) {
+                return "Sinopsis no disponible.";
+            }
+
+            if (pelicula.overview.length <= 140) {
+                return pelicula.overview;
+            }
+
+            return `${pelicula.overview.substring(0, 140)}...`;
+        }
+
+        async function obtenerTrailerKey(idPelicula) {
+            if (!idPelicula) {
+                return null;
+            }
+
+            try {
+                const respuestaEs = await fetch(`${TMDB_BASE_URL}/movie/${idPelicula}/videos?api_key=${TMDB_API_KEY}&language=es-ES`);
+                const datosEs = await respuestaEs.json();
+                let trailer = datosEs.results.find(video => video.site === "YouTube" && video.type === "Trailer");
+
+                if (!trailer) {
+                    const respuestaEn = await fetch(`${TMDB_BASE_URL}/movie/${idPelicula}/videos?api_key=${TMDB_API_KEY}&language=en-US`);
+                    const datosEn = await respuestaEn.json();
+                    trailer = datosEn.results.find(video => video.site === "YouTube" && video.type === "Trailer");
+                }
+
+                return trailer ? trailer.key : null;
+            } catch (error) {
+                return null;
+            }
+        }
+
+        async function prepararPeliculasConTrailer(peliculas) {
+            const resultado = [];
+
+            for (const pelicula of peliculas) {
+                const trailerKey = pelicula.trailerKey || await obtenerTrailerKey(pelicula.id);
+
+                if (trailerKey) {
+                    resultado.push({
+                        ...pelicula,
+                        trailerKey: trailerKey
+                    });
+                }
+
+                if (resultado.length >= 6) {
+                    break;
+                }
+            }
+
+            return resultado;
+        }
+
+        function crearTrailerCard(pelicula, tipo) {
+            const etiquetaTexto = tipo === "reciente" ? "Estreno reciente" : "Próximamente";
+            const etiquetaClase = tipo === "reciente" ? "etiqueta-reciente" : "etiqueta-proximo";
+            const fechaTexto = tipo === "reciente" ? "Estrenada el" : "Estreno previsto";
+
+            return `
+                <article class="trailer-dinamico-card">
+                    <div class="video-wrapper">
+                        <iframe
+                            src="https://www.youtube-nocookie.com/embed/${pelicula.trailerKey}?rel=0"
+                            title="Tráiler de ${pelicula.title}"
+                            loading="lazy"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+
+                    <div class="trailer-dinamico-info">
+                        <span class="estreno-etiqueta ${etiquetaClase}">${etiquetaTexto}</span>
+                        <h3>${pelicula.title}</h3>
+                        <p class="estreno-fecha">${fechaTexto}: ${formatearFecha(pelicula.release_date)}</p>
+                        <p class="estreno-rating">Puntuación TMDb: <strong>${obtenerPuntuacion(pelicula)}</strong></p>
+                        <p class="estreno-descripcion">${obtenerDescripcion(pelicula)}</p>
+                        <div class="trailer-acciones">
+                            <a href="https://www.youtube.com/watch?v=${pelicula.trailerKey}" target="_blank" rel="noopener noreferrer" class="btn-small">Abrir en YouTube</a>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        function pintarTrailers(contenedor, peliculas, tipo) {
+            if (!peliculas.length) {
+                contenedor.innerHTML = `
+                    <div class="trailers-vacio">
+                        <h3>No hay trailers disponibles</h3>
+                        <p>TMDb no tiene trailers oficiales para esta categoría ahora mismo.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            contenedor.innerHTML = peliculas.map(pelicula => crearTrailerCard(pelicula, tipo)).join("");
+        }
+
+        async function cargarTrailers() {
+            try {
+                const hoy = new Date();
+                const haceDosMeses = new Date();
+                haceDosMeses.setMonth(hoy.getMonth() - 2);
+
+                const fechaHoy = hoy.toISOString().split("T")[0];
+                const fechaReciente = haceDosMeses.toISOString().split("T")[0];
+
+                const fechaLimiteProximos = new Date();
+                fechaLimiteProximos.setFullYear(hoy.getFullYear() + 2);
+                const fechaMaxProximos = fechaLimiteProximos.toISOString().split("T")[0];
+
+                const [respuestaRecientes, respuestaProximos] = await Promise.all([
+                    fetch(`${TMDB_BASE_URL}/discover/movie?api_key=${TMDB_API_KEY}&language=es-ES&region=ES&sort_by=popularity.desc&primary_release_date.gte=${fechaReciente}&primary_release_date.lte=${fechaHoy}&vote_count.gte=80&with_release_type=2|3&page=1`),
+                    fetch(`${TMDB_BASE_URL}/discover/movie?api_key=${TMDB_API_KEY}&language=es-ES&region=ES&sort_by=popularity.desc&primary_release_date.gte=${fechaHoy}&primary_release_date.lte=${fechaMaxProximos}&with_release_type=2|3&page=1`)
+                ]);
+
+                const datosRecientes = await respuestaRecientes.json();
+                const datosProximos = await respuestaProximos.json();
+
+                const peliculasRecientesBase = datosRecientes.results && datosRecientes.results.length > 0
+                    ? datosRecientes.results
+                        .filter(pelicula => pelicula.poster_path && pelicula.vote_count >= 80)
+                        .sort((a, b) => b.popularity - a.popularity)
+                    : fallbackTrailersRecientes;
+
+                const peliculasProximasBase = datosProximos.results && datosProximos.results.length > 0
+                    ? datosProximos.results
+                        .filter(pelicula => pelicula.poster_path && pelicula.release_date >= fechaHoy)
+                        .sort((a, b) => b.popularity - a.popularity)
+                    : fallbackTrailersProximos;
+
+                const peliculasRecientesConTrailer = await prepararPeliculasConTrailer(peliculasRecientesBase);
+                const peliculasProximasConTrailer = await prepararPeliculasConTrailer(peliculasProximasBase);
+
+                pintarTrailers(trailersRecientes, peliculasRecientesConTrailer, "reciente");
+                pintarTrailers(trailersProximos, peliculasProximasConTrailer, "proximo");
+            } catch (error) {
+                const recientesFallback = fallbackTrailersRecientes.filter(pelicula => pelicula.trailerKey);
+                const proximosFallback = fallbackTrailersProximos.filter(pelicula => pelicula.trailerKey);
+
+                pintarTrailers(trailersRecientes, recientesFallback, "reciente");
+                pintarTrailers(trailersProximos, proximosFallback, "proximo");
+            }
+        }
+
+        cargarTrailers();
+    </script>
+</body>
+</html>

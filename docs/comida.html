@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+       <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bungee+Inline&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comida - CineK</title>
+    <link rel="icon" href="https://png.pngtree.com/png-clipart/20221006/ourmid/pngtree-popcorn-logo-png-image_6287125.png">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="../img/cinekklogo.png" alt="CineK Logo" style="width: 90px; height: auto;">
+                </a>
+                <h1>CineK</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="cartelera.html">Cartelera</a></li>
+                    <li><a href="estrenos.html">Estrenos</a></li>
+                    <li><a href="trailer.html">Trailers</a></li>
+                    <li><a href="comida.html">Comida</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <!-- TÍTULO PRINCIPAL -->
+   <div id="marquee">
+  <div class="neon_bar top"></div>
+  <div class="marquee_message">
+    <span>COMIDA Y <BR> BEBDIDA</span>
+  </div>
+  <div class="neon_bar bottom"></div>
+</div>
+
+
+    <!-- CARRITO -->
+    <button class="cart-button" id="cartButton" aria-label="Abrir carrito">
+        🛒
+        <span id="cartCount">0</span>
+    </button>
+
+    <aside class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Tu carrito</h2>
+            <button id="closeCart" aria-label="Cerrar carrito">×</button>
+        </div>
+        <div id="cartItems" class="cart-items">
+            <p class="empty-cart">El carrito está vacío.</p>
+        </div>
+        <div class="cart-total">
+            <span>Total</span>
+            <strong id="cartTotal">0.00€</strong>
+        </div>
+        <button class="checkout-button">Comprar</button>
+    </aside>
+
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <!-- COMIDA VISUAL -->
+    <section class="section food-shop-section">
+        <h2>Comida</h2>
+        <div class="shop-grid">
+            <article class="shop-card" data-name="Palomitas" data-base="2.50">
+                <img src="https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=800&q=80" alt="Palomitas">
+                <div class="shop-card-content">
+                    <h3>Palomitas</h3>
+                    <p>Palomitas crujientes preparadas al momento.</p>
+
+                    <label>Tamaño</label>
+                    <select class="option-size">
+                        <option value="Pequeño" data-price="2.50">Pequeño - 2.50€</option>
+                        <option value="Mediano" data-price="3.50">Mediano - 3.50€</option>
+                        <option value="Grande" data-price="4.50">Grande - 4.50€</option>
+                    </select>
+
+                    <label>Aditivo</label>
+                    <select class="option-extra">
+                        <option value="Sin aditivo" data-price="0">Sin aditivo</option>
+                        <option value="Mantequilla" data-price="0.50">Mantequilla +0.50€</option>
+                        <option value="Caramelo" data-price="0.75">Caramelo +0.75€</option>
+                        <option value="Sal extra" data-price="0.25">Sal extra +0.25€</option>
+                    </select>
+
+                    <button class="add-to-cart">Añadir al carrito</button>
+                </div>
+            </article>
+
+            <article class="shop-card" data-name="Nachos" data-base="4.00">
+                <img src="https://img.freepik.com/foto-gratis/nachos-maiz-sobre-fondo-blanco_93675-132372.jpg?semt=ais_hybrid&w=740&q=80" alt="Nachos">
+                <div class="shop-card-content">
+                    <h3>Nachos</h3>
+                    <p>Nachos crujientes con acompañamiento a elegir.</p>
+
+                    <label>Salsa</label>
+                    <select class="option-size">
+                        <option value="Queso" data-price="4.00">Queso - 4.00€</option>
+                        <option value="Guacamole" data-price="4.50">Guacamole - 4.50€</option>
+                        <option value="Picante" data-price="4.25">Picante - 4.25€</option>
+                    </select>
+
+                    <label>Extra</label>
+                    <select class="option-extra">
+                        <option value="Sin extra" data-price="0">Sin extra</option>
+                        <option value="Doble salsa" data-price="0.75">Doble salsa +0.75€</option>
+                        <option value="Jalapeños" data-price="0.50">Jalapeños +0.50€</option>
+                    </select>
+
+                    <button class="add-to-cart">Añadir al carrito</button>
+                </div>
+            </article>
+
+            <article class="shop-card" data-name="Dulces" data-base="1.50">
+                <img src="https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?auto=format&fit=crop&w=800&q=80" alt="Dulces">
+                <div class="shop-card-content">
+                    <h3>Dulces</h3>
+                    <p>Elige entre chocolatinas y gominolas para la película.</p>
+
+                    <label>Producto</label>
+                    <select class="option-size">
+                        <option value="Chocolatina" data-price="1.50">Chocolatina - 1.50€</option>
+                        <option value="Gominolas" data-price="2.50">Gominolas - 2.50€</option>
+                        <option value="Mix dulce" data-price="3.00">Mix dulce - 3.00€</option>
+                    </select>
+
+                    <label>Formato</label>
+                    <select class="option-extra">
+                        <option value="Individual" data-price="0">Individual</option>
+                        <option value="Para compartir" data-price="1.00">Para compartir +1.00€</option>
+                    </select>
+
+                    <button class="add-to-cart">Añadir al carrito</button>
+                </div>
+            </article>
+
+            <article class="shop-card" data-name="Frutos secos" data-base="3.00">
+                <img src="https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&w=800&q=80" alt="Frutos secos">
+                <div class="shop-card-content">
+                    <h3>Frutos secos</h3>
+                    <p>Bolsa de frutos secos para picar durante la sesión.</p>
+
+                    <label>Tipo</label>
+                    <select class="option-size">
+                        <option value="Mix clásico" data-price="3.00">Mix clásico - 3.00€</option>
+                        <option value="Solo cacahuetes" data-price="2.50">Solo cacahuetes - 2.50€</option>
+                        <option value="Premium" data-price="3.75">Premium - 3.75€</option>
+                    </select>
+
+                    <label>Acabado</label>
+                    <select class="option-extra">
+                        <option value="Normal" data-price="0">Normal</option>
+                        <option value="Salado" data-price="0.25">Salado +0.25€</option>
+                        <option value="Tostado" data-price="0.25">Tostado +0.25€</option>
+                    </select>
+
+                    <button class="add-to-cart">Añadir al carrito</button>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- BEBIDAS VISUALES -->
+    <section class="section food-shop-section">
+        <h2>Bebidas</h2>
+        <div class="shop-grid">
+            <article class="shop-card" data-name="Refresco" data-base="2.00">
+                <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=800&q=80" alt="Refresco">
+                <div class="shop-card-content">
+                    <h3>Refresco</h3>
+                    <p>Coca-Cola, Sprite o Fanta en distintos tamaños.</p>
+
+                    <label>Tamaño</label>
+                    <select class="option-size">
+                        <option value="Pequeño 33cl" data-price="2.00">Pequeño 33cl - 2.00€</option>
+                        <option value="Mediano 50cl" data-price="3.00">Mediano 50cl - 3.00€</option>
+                        <option value="Grande 75cl" data-price="4.00">Grande 75cl - 4.00€</option>
+                    </select>
+
+                    <label>Sabor</label>
+                    <select class="option-extra">
+                        <option value="Coca-Cola" data-price="0">Coca-Cola</option>
+                        <option value="Sprite" data-price="0">Sprite</option>
+                        <option value="Fanta naranja" data-price="0">Fanta naranja</option>
+                        <option value="Fanta limón" data-price="0">Fanta limón</option>
+                    </select>
+
+                    <button class="add-to-cart">Añadir al carrito</button>
+                </div>
+            </article>
+
+            <article class="shop-card" data-name="Agua" data-base="1.50">
+                <img src="https://www.bezoya.es/bebe-a-bordo/wp-content/uploads/2018/10/1500-hogar.jpg" alt="Agua embotellada">
+                <div class="shop-card-content">
+                    <h3>Agua</h3>
+                    <p>Agua mineral natural o con gas.</p>
+
+                    <label>Tipo</label>
+                    <select class="option-size">
+                        <option value="Natural 50cl" data-price="1.50">Natural 50cl - 1.50€</option>
+                        <option value="Con gas 50cl" data-price="1.75">Con gas 50cl - 1.75€</option>
+                    </select>
+
+                    <label>Temperatura</label>
+                    <select class="option-extra">
+                        <option value="Fría" data-price="0">Fría</option>
+                        <option value="Natural" data-price="0">Natural</option>
+                    </select>
+
+                    <button class="add-to-cart">Añadir al carrito</button>
+                </div>
+            </article>
+
+            <article class="shop-card" data-name="Zumo" data-base="3.00">
+                <img src="https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=800&q=80" alt="Zumo natural">
+                <div class="shop-card-content">
+                    <h3>Zumo</h3>
+                    <p>Zumo fresco de fruta.</p>
+
+                    <label>Sabor</label>
+                    <select class="option-size">
+                        <option value="Naranja" data-price="3.00">Naranja - 3.00€</option>
+                        <option value="Manzana" data-price="3.00">Manzana - 3.00€</option>
+                        <option value="Piña" data-price="3.00">Piña - 3.00€</option>
+                    </select>
+
+                    <label>Tamaño</label>
+                    <select class="option-extra">
+                        <option value="Mediano 30cl" data-price="0">Mediano 30cl</option>
+                        <option value="Grande 50cl" data-price="0.75">Grande 50cl +0.75€</option>
+                    </select>
+
+                    <button class="add-to-cart">Añadir al carrito</button>
+                </div>
+            </article>
+
+            <article class="shop-card" data-name="Café" data-base="2.50">
+                <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80" alt="Café">
+                <div class="shop-card-content">
+                    <h3>Café</h3>
+                    <p>Café para antes o después de la sesión.</p>
+
+                    <label>Tipo</label>
+                    <select class="option-size">
+                        <option value="Espresso" data-price="2.00">Espresso - 2.00€</option>
+                        <option value="Americano" data-price="2.25">Americano - 2.25€</option>
+                        <option value="Con leche" data-price="2.50">Con leche - 2.50€</option>
+                    </select>
+
+                    <label>Formato</label>
+                    <select class="option-extra">
+                        <option value="Normal" data-price="0">Normal</option>
+                        <option value="Doble" data-price="0.75">Doble +0.75€</option>
+                        <option value="Descafeinado" data-price="0">Descafeinado</option>
+                    </select>
+
+                    <button class="add-to-cart">Añadir al carrito</button>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- COMBOS ESPECIALES -->
+    <section class="section">
+        <h2>Combos especiales</h2>
+        <div class="combos-grid">
+            <div class="combo-card purchasable-combo" data-name="Combo Básico" data-price="5.00">
+                <h3>Combo Básico</h3>
+                <ul>
+                    <li>Palomitas medianas</li>
+                    <li>Refresco mediano</li>
+                </ul>
+                <p class="precio"><strong>5.00€</strong></p>
+                <p>Ahorra 0.50€</p>
+                <button class="add-combo-to-cart">Añadir al carrito</button>
+            </div>
+
+            <div class="combo-card purchasable-combo" data-name="Combo Premium" data-price="8.50">
+                <h3>Combo Premium</h3>
+                <ul>
+                    <li>Palomitas grandes con mantequilla</li>
+                    <li>Refresco grande</li>
+                    <li>Chocolatina</li>
+                </ul>
+                <p class="precio"><strong>8.50€</strong></p>
+                <p>Ahorra 1.00€</p>
+                <button class="add-combo-to-cart">Añadir al carrito</button>
+            </div>
+
+            <div class="combo-card purchasable-combo" data-name="Combo Amigos" data-price="12.50">
+                <h3>Combo Amigos</h3>
+                <ul>
+                    <li>2 palomitas grandes</li>
+                    <li>2 refrescos grandes</li>
+                    <li>Nachos con queso</li>
+                </ul>
+                <p class="precio"><strong>12.50€</strong></p>
+                <p>Ahorra 2.50€</p>
+                <button class="add-combo-to-cart">Añadir al carrito</button>
+            </div>
+
+            <div class="combo-card purchasable-combo" data-name="Combo Dulce" data-price="7.50">
+                <h3>Combo Dulce</h3>
+                <ul>
+                    <li>Palomitas medianas</li>
+                    <li>Refresco mediano</li>
+                    <li>Gominolas</li>
+                    <li>Chocolatina</li>
+                </ul>
+                <p class="precio"><strong>7.50€</strong></p>
+                <p>Ahorra 1.50€</p>
+                <button class="add-combo-to-cart">Añadir al carrito</button>
+            </div>
+        </div>
+    </section>
+
+    <hr>
+
+
+    <!-- PROMOCIONES -->
+    <section class="section">
+        <h2>Promociones vigentes</h2>
+        <div class="promo-cards-grid">
+            <div class="promo-card">
+                <span class="promo-tag">2x1</span>
+                <h3>Miércoles especial</h3>
+                <p>2x1 en todos los combos.</p>
+            </div>
+
+            <div class="promo-card">
+                <span class="promo-tag">-15%</span>
+                <h3>Happy hour</h3>
+                <p>Descuento en bebidas antes de las 17:00.</p>
+            </div>
+
+            <div class="promo-card">
+                <span class="promo-tag">5+1</span>
+                <h3>Tarjeta cliente</h3>
+                <p>Cada 5 combos, 1 gratis.</p>
+            </div>
+
+            <div class="promo-card">
+                <span class="promo-tag">-10%</span>
+                <h3>Estudiantes</h3>
+                <p>Descuento con carné válido.</p>
+            </div>
+
+            <div class="promo-card">
+                <span class="promo-tag">-15%</span>
+                <h3>Jubilados y pensionistas</h3>
+                <p>Descuento en toda la comida.</p>
+            </div>
+
+            <div class="promo-card">
+                <span class="promo-tag">PACK</span>
+                <h3>Grandes cantidades</h3>
+                <p>Consulta precios especiales para empresas.</p>
+            </div>
+        </div>
+    </section>
+    <script>
+        const cartButton = document.getElementById('cartButton');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const closeCart = document.getElementById('closeCart');
+        const cartItemsContainer = document.getElementById('cartItems');
+        const cartCount = document.getElementById('cartCount');
+        const cartTotal = document.getElementById('cartTotal');
+        const cart = [];
+
+        function openCart() {
+            cartSidebar.classList.add('active');
+            cartOverlay.classList.add('active');
+        }
+
+        function closeCartPanel() {
+            cartSidebar.classList.remove('active');
+            cartOverlay.classList.remove('active');
+        }
+
+        function updateCart() {
+            cartItemsContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="empty-cart">El carrito está vacío.</p>';
+            }
+
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price;
+
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div>
+                        <h4>${item.name}</h4>
+                        <p>${item.details}</p>
+                        <strong>${item.price.toFixed(2)}€</strong>
+                    </div>
+                    <button class="remove-item" data-index="${index}">×</button>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+            });
+
+            cartCount.textContent = cart.length;
+            cartTotal.textContent = total.toFixed(2) + '€';
+        }
+
+        function addProductToCart(card) {
+            const name = card.dataset.name;
+            const sizeSelect = card.querySelector('.option-size');
+            const extraSelect = card.querySelector('.option-extra');
+            const sizeOption = sizeSelect.options[sizeSelect.selectedIndex];
+            const extraOption = extraSelect.options[extraSelect.selectedIndex];
+            const price = Number(sizeOption.dataset.price) + Number(extraOption.dataset.price);
+
+            cart.push({
+                name: name,
+                details: `${sizeOption.value} · ${extraOption.value}`,
+                price: price
+            });
+
+            updateCart();
+            openCart();
+        }
+
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                addProductToCart(button.closest('.shop-card'));
+            });
+        });
+
+        document.querySelectorAll('.add-combo-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                const combo = button.closest('.purchasable-combo');
+                cart.push({
+                    name: combo.dataset.name,
+                    details: 'Combo especial',
+                    price: Number(combo.dataset.price)
+                });
+
+                updateCart();
+                openCart();
+            });
+        });
+
+        cartItemsContainer.addEventListener('click', event => {
+            if (event.target.classList.contains('remove-item')) {
+                cart.splice(Number(event.target.dataset.index), 1);
+                updateCart();
+            }
+        });
+
+        cartButton.addEventListener('click', openCart);
+        closeCart.addEventListener('click', closeCartPanel);
+        cartOverlay.addEventListener('click', closeCartPanel);
+    </script>
+    <!-- FOOTER -->
+        <footer>
+    <div class="footer-content footer-simple">
+        <div class="footer-section">
+            <h3>CineK</h3>
+            <p>Tu cine de confianza.</p>
+        </div>
+
+        <div class="footer-section">
+            <h3>Ubicación</h3>
+            <p>Little St James Island</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=Little+St+James+Island" target="_blank" rel="noopener noreferrer">Ver en Google Maps</a>
+        </div>
+
+        <div class="footer-section">
+            <h3>Contacto</h3>
+            <p>info@cinek.es</p>
+        </div>
+    </div>
+    <p class="footer-bottom">&copy; 2026 CineK.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bungee+Inline&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartelera - CineK</title>
+    <link rel="icon" href="https://png.pngtree.com/png-clipart/20221006/ourmid/pngtree-popcorn-logo-png-image_6287125.png">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+           <div class="logo">
+                <a href="index.html">
+                    <img src="../img/cinekklogo.png" alt="CineK Logo" style="width: 90px; height: auto;">
+                </a>
+                <h1>CineK</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="cartelera.html">Cartelera</a></li>
+                    <li><a href="estrenos.html">Estrenos</a></li>
+                    <li><a href="trailer.html">Trailers</a></li>
+                    <li><a href="comida.html">Comida</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <!-- TÍTULO PRINCIPAL -->
+   <div id="marquee">
+  <div class="neon_bar top"></div>
+  <div class="marquee_message">
+    <span>CARTELERA</span>
+  </div>
+  <div class="neon_bar bottom"></div>
+</div>
+
+    <!-- CARTELERA DINÁMICA -->
+    <section class="section">
+        <h2>Películas disponibles</h2>
+        <div id="cartelera-grid" class="cartelera-grid"></div>
+    </section>
+
+    <!-- MODAL DE COMPRA -->
+    <div id="compra-modal" class="compra-modal">
+        <div class="compra-contenido">
+            <button id="cerrar-compra" class="cerrar-compra">×</button>
+            <h2 id="compra-pelicula">Comprar entradas</h2>
+            <p id="compra-sesion" class="compra-sesion"></p>
+
+            <h3>Selecciona tus asientos</h3>
+            <div class="pantalla-cine">PANTALLA</div>
+            <div id="asientos-grid" class="asientos-grid"></div>
+
+            <div class="compra-resumen">
+                <p>Asientos seleccionados: <strong id="asientos-seleccionados">0</strong></p>
+                <p>Total: <strong id="total-compra">0.00€</strong></p>
+            </div>
+
+            <button id="confirmar-compra" class="btn-compra">Confirmar compra</button>
+        </div>
+    </div>
+
+    <!-- MODAL FINAL -->
+    <div id="final-modal" class="compra-modal">
+        <div class="compra-contenido compra-final">
+            <button id="cerrar-final" class="cerrar-compra">×</button>
+            <h2>Compra completada</h2>
+            <p>Entradas reservadas correctamente.</p>
+            <p>¿Quieres comprar comida para acompañar la película?</p>
+            <div class="final-botones">
+                <a href="comida.html" class="btn-compra">Sí, comprar comida</a>
+                <button id="no-comida" class="btn-secundario">No, gracias</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- FOOTER -->
+        <footer>
+    <div class="footer-content footer-simple">
+        <div class="footer-section">
+            <h3>CineK</h3>
+            <p>Tu cine de confianza.</p>
+        </div>
+
+        <div class="footer-section">
+            <h3>Ubicación</h3>
+            <p>Little St James Island</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=Little+St+James+Island" target="_blank" rel="noopener noreferrer">Ver en Google Maps</a>
+        </div>
+
+        <div class="footer-section">
+            <h3>Contacto</h3>
+            <p>info@cinek.es</p>
+        </div>
+    </div>
+    <p class="footer-bottom">&copy; 2026 CineK.</p>
+</footer>
+    <script>
+        const TMDB_API_KEY = "4f0675e02026147f07c5129d1d1d5f16";
+        const carteleraGrid = document.getElementById("cartelera-grid");
+        const compraModal = document.getElementById("compra-modal");
+        const finalModal = document.getElementById("final-modal");
+        const compraPelicula = document.getElementById("compra-pelicula");
+        const compraSesion = document.getElementById("compra-sesion");
+        const asientosGrid = document.getElementById("asientos-grid");
+        const asientosSeleccionadosTexto = document.getElementById("asientos-seleccionados");
+        const totalCompraTexto = document.getElementById("total-compra");
+        const precioEntrada = 8.50;
+        let asientosSeleccionados = [];
+
+        const peliculasFallback = [
+            {
+                title: "Dune: Parte 2",
+                overview: "Paul Atreides se une a Chani y los Fremen mientras busca venganza contra quienes destruyeron a su familia.",
+                poster_path: "https://pics.filmaffinity.com/Dune_Parte_Dos-288678616-large.jpg"
+            },
+            {
+                title: "Oppenheimer",
+                overview: "La historia del físico J. Robert Oppenheimer y el desarrollo de la bomba atómica.",
+                poster_path: "https://m.media-amazon.com/images/I/71XC-VCBOcL._AC_UF894,1000_QL80_.jpg"
+            },
+            {
+                title: "Barbie",
+                overview: "Barbie abandona Barbieland y descubre el mundo real junto a Ken.",
+                poster_path: "https://cdng.europosters.eu/pod_public/750/262974.jpg"
+            },
+            {
+                title: "Spider-Man: Across the Spider-Verse",
+                overview: "Miles Morales viaja por el multiverso y se enfrenta a nuevas versiones de Spider-Man.",
+                poster_path: "https://m.media-amazon.com/images/I/8105Oc1+FPL.jpg"
+            }
+        ];
+
+        function generarHorarios() {
+            const horas = ["16:00", "17:30", "18:45", "20:00", "21:30", "22:15"];
+            const salas = ["Sala 1", "Sala 2", "Sala 3", "Sala IMAX"];
+            return horas.slice(0, 4).map((hora, index) => ({
+                hora: hora,
+                sala: salas[index % salas.length]
+            }));
+        }
+
+        function obtenerPoster(pelicula) {
+            if (pelicula.poster_path && pelicula.poster_path.startsWith("http")) {
+                return pelicula.poster_path;
+            }
+
+            if (pelicula.poster_path) {
+                return `https://image.tmdb.org/t/p/w500${pelicula.poster_path}`;
+            }
+
+            return "../img/cinekklogo.png";
+        }
+
+        function pintarCartelera(peliculas) {
+            carteleraGrid.innerHTML = "";
+
+            peliculas.slice(0, 8).forEach((pelicula) => {
+                const horarios = generarHorarios();
+                const poster = obtenerPoster(pelicula);
+                const descripcion = pelicula.overview || "Sinopsis no disponible.";
+
+                const tarjeta = document.createElement("article");
+                tarjeta.className = "pelicula-card";
+
+                tarjeta.innerHTML = `
+                    <img src="${poster}" alt="${pelicula.title}">
+                    <div class="pelicula-info">
+                        <h3>${pelicula.title}</h3>
+                        <p>${descripcion.substring(0, 150)}...</p>
+                        <div class="horarios-pelicula">
+                            ${horarios.map(sesion => `
+                                <button class="hora-btn" data-pelicula="${pelicula.title}" data-hora="${sesion.hora}" data-sala="${sesion.sala}">
+                                    ${sesion.hora}<span>${sesion.sala}</span>
+                                </button>
+                            `).join("")}
+                        </div>
+                    </div>
+                `;
+
+                carteleraGrid.appendChild(tarjeta);
+            });
+
+            document.querySelectorAll(".hora-btn").forEach((boton) => {
+                boton.addEventListener("click", function () {
+                    abrirCompra(this.dataset.pelicula, this.dataset.hora, this.dataset.sala);
+                });
+            });
+        }
+
+        async function cargarPeliculas() {
+            if (TMDB_API_KEY === "PON_AQUI_TU_API_KEY") {
+                pintarCartelera(peliculasFallback);
+                return;
+            }
+
+            try {
+                const respuesta = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${TMDB_API_KEY}&language=es-ES&region=ES&page=1`);
+                const datos = await respuesta.json();
+                pintarCartelera(datos.results);
+            } catch (error) {
+                pintarCartelera(peliculasFallback);
+            }
+        }
+
+        function abrirCompra(pelicula, hora, sala) {
+            compraPelicula.textContent = pelicula;
+            compraSesion.textContent = `${sala} · ${hora}`;
+            asientosSeleccionados = [];
+            generarAsientos();
+            actualizarResumen();
+            compraModal.classList.add("activo");
+        }
+
+        function generarAsientos() {
+            asientosGrid.innerHTML = "";
+            const filas = ["A", "B", "C", "D", "E"];
+
+            filas.forEach((fila) => {
+                for (let numero = 1; numero <= 8; numero++) {
+                    const asiento = document.createElement("button");
+                    const codigo = `${fila}${numero}`;
+                    asiento.className = "asiento";
+                    asiento.textContent = codigo;
+
+                    if (Math.random() < 0.18) {
+                        asiento.classList.add("ocupado");
+                        asiento.disabled = true;
+                    }
+
+                    asiento.addEventListener("click", function () {
+                        asiento.classList.toggle("seleccionado");
+
+                        if (asientosSeleccionados.includes(codigo)) {
+                            asientosSeleccionados = asientosSeleccionados.filter(item => item !== codigo);
+                        } else {
+                            asientosSeleccionados.push(codigo);
+                        }
+
+                        actualizarResumen();
+                    });
+
+                    asientosGrid.appendChild(asiento);
+                }
+            });
+        }
+
+        function actualizarResumen() {
+            asientosSeleccionadosTexto.textContent = asientosSeleccionados.length;
+            totalCompraTexto.textContent = `${(asientosSeleccionados.length * precioEntrada).toFixed(2)}€`;
+        }
+
+        document.getElementById("cerrar-compra").addEventListener("click", function () {
+            compraModal.classList.remove("activo");
+        });
+
+        document.getElementById("confirmar-compra").addEventListener("click", function () {
+            if (asientosSeleccionados.length === 0) {
+                alert("Selecciona al menos un asiento.");
+                return;
+            }
+
+            compraModal.classList.remove("activo");
+            finalModal.classList.add("activo");
+        });
+
+        document.getElementById("cerrar-final").addEventListener("click", function () {
+            finalModal.classList.remove("activo");
+        });
+
+        document.getElementById("no-comida").addEventListener("click", function () {
+            finalModal.classList.remove("activo");
+        });
+
+        document.getElementById("marquee").addEventListener("click", function () {
+            this.classList.toggle("on");
+        });
+
+        cargarPeliculas();
+    </script>
+</body>
+</html>
